@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { useForm, SubmitHandler } from 'react-hook-form';
+
 import { motion } from 'framer-motion';
-import { BsCheckCircleFill } from 'react-icons/bs';
+import { useForm, SubmitHandler } from 'react-hook-form';
 import toast from 'react-hot-toast';
+import { BsCheckCircleFill } from 'react-icons/bs';
 
 interface IFormInputs {
   firstName: string;
@@ -12,14 +13,14 @@ interface IFormInputs {
   message: string;
 }
 
-const FormField = ({ 
-  label, 
-  name, 
-  register, 
-  error, 
+const FormField = ({
+  label,
+  name,
+  register,
+  error,
   required = true,
-  type = "text" 
-}: { 
+  type = 'text',
+}: {
   label: string;
   name: keyof IFormInputs;
   register: any;
@@ -38,20 +39,25 @@ const FormField = ({
     </div>
     <input
       type={type}
-      className={`w-full p-3 border ${error ? 'border-red-500' : 'border-gray-200'} 
+      className={`w-full p-3 border ${
+        error ? 'border-red-500' : 'border-gray-200'
+      } 
         rounded-[4px] font-dm-sans text-base leading-[150%] focus:outline-none focus:ring-2 focus:ring-purple-500`}
-      {...register(name, { required: required })}
+      {...register(name, { required })}
     />
-    {error && (
-      <span className="text-red-500 text-sm">{error}</span>
-    )}
+    {error && <span className="text-red-500 text-sm">{error}</span>}
   </div>
 );
 
 const ContactForm: React.FC = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
-  const { register, handleSubmit, formState: { errors }, reset } = useForm<IFormInputs>();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm<IFormInputs>();
 
   const onSubmit: SubmitHandler<IFormInputs> = async (data) => {
     if (!data.firstName || !data.lastName || !data.email) {
@@ -76,18 +82,21 @@ const ContactForm: React.FC = () => {
     setIsSubmitting(true);
     try {
       // Send form data to Python backend
-      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/send-request-taken-email`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          name: `${data.firstName} ${data.lastName}`,
-          email: data.email,
-          company: data.company,
-          message: data.message
-        }),
-      });
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/send-request-taken-email`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            name: `${data.firstName} ${data.lastName}`,
+            email: data.email,
+            company: data.company,
+            message: data.message,
+          }),
+        }
+      );
 
       if (!response.ok) {
         throw new Error('Failed to send email');
@@ -131,11 +140,11 @@ const ContactForm: React.FC = () => {
         <motion.div
           initial={{ scale: 0 }}
           animate={{ scale: 1 }}
-          transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
+          transition={{ delay: 0.2, type: 'spring', stiffness: 200 }}
         >
           <BsCheckCircleFill className="w-24 h-24 text-[#533594]" />
         </motion.div>
-        
+
         <motion.h2
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -144,21 +153,21 @@ const ContactForm: React.FC = () => {
         >
           Thank You!
         </motion.h2>
-        
+
         <motion.p
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.6 }}
           className="text-center text-gray-600"
         >
-          We've received your request and will get back to you shortly.
+          We have received your request and will get back to you shortly.
         </motion.p>
       </motion.div>
     );
   }
 
   return (
-    <form 
+    <form
       onSubmit={handleSubmit(onSubmit)}
       className="flex flex-col items-start p-12 gap-6 w-full lg:w-[636px] bg-white shadow-lg rounded-xl"
     >
@@ -207,7 +216,7 @@ const ContactForm: React.FC = () => {
         <textarea
           className="w-full p-3 border border-gray-200 rounded-[4px] min-h-[100px]
             font-dm-sans text-base leading-[150%] focus:outline-none focus:ring-2 focus:ring-purple-500"
-          {...register("message")}
+          {...register('message')}
         />
       </div>
 
@@ -225,4 +234,4 @@ const ContactForm: React.FC = () => {
   );
 };
 
-export default ContactForm; 
+export default ContactForm;

@@ -1,4 +1,5 @@
 import React from 'react';
+
 import Image from 'next/image';
 
 interface TeamMember {
@@ -10,29 +11,32 @@ interface TeamMember {
 
 const teamMembers: TeamMember[] = [
   {
-    name: "Rasit Tavus",
-    title: "CEO & Founder",
-    description: "Dr., Criminal and Blockchain law.",
-    image: "/assets/images/team/rasit-tavus.png"
+    name: 'Rasit Tavus',
+    title: 'CEO & Founder',
+    description: 'Dr., Criminal and Blockchain law.',
+    image: '/assets/images/team/rasit-tavus.png',
   },
   {
-    name: "Arda Atacan Ersoy",
-    title: "Founding Engineer",
-    description: "Expert in web development and blockchain architecture. Bsc at Bilkent University, Msc at Technical University of Munich.",
-    image: "/assets/images/team/arda-ersoy.png"
+    name: 'Arda Atacan Ersoy',
+    title: 'Founding Engineer',
+    description:
+      'Expert in web development and blockchain architecture. Bsc at Bilkent University, Msc at Technical University of Munich.',
+    image: '/assets/images/team/arda-ersoy.png',
   },
   {
-    name: "Serhat Bezmez",
-    title: "Founding Engineer",
-    description: "Speicalized in backend development and blockchain data analysis. Bsc at Bilkent University, Msc at Technical University of Munich.",
-    image: "/assets/images/team/serhat-bezmez.png"
+    name: 'Serhat Bezmez',
+    title: 'Founding Engineer',
+    description:
+      'Speicalized in backend development and blockchain data analysis. Bsc at Bilkent University, Msc at Technical University of Munich.',
+    image: '/assets/images/team/serhat-bezmez.png',
   },
   {
-    name: "Ferhat Karaca",
-    title: "Founding Engineer",
-    description: "Expert in frontend development and blockchain solutions. Bsc at Bilkent University, Msc at Technical University of Munich.",
-    image: "/assets/images/team/ferhat-karaca.png"
-  }
+    name: 'Ferhat Karaca',
+    title: 'Founding Engineer',
+    description:
+      'Expert in frontend development and blockchain solutions. Bsc at Bilkent University, Msc at Technical University of Munich.',
+    image: '/assets/images/team/ferhat-karaca.png',
+  },
 ];
 
 const Team: React.FC = () => {
@@ -75,9 +79,7 @@ const Team: React.FC = () => {
                 <p className="text-purple-400 font-medium mb-3">
                   {member.title}
                 </p>
-                <p className="text-gray-400 text-sm">
-                  {member.description}
-                </p>
+                <p className="text-gray-400 text-sm">{member.description}</p>
               </div>
 
               {/* Decorative Elements */}
