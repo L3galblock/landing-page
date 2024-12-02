@@ -1,5 +1,7 @@
 import React from 'react';
+
 import Image from 'next/image';
+
 import ContactForm from './ContactForm';
 
 const FeatureItem = ({ text }: { text: string }) => (
@@ -10,7 +12,6 @@ const FeatureItem = ({ text }: { text: string }) => (
         alt="check"
         width={24}
         height={24}
-        
       />
     </div>
     <span className="font-dm-sans font-normal text-lg leading-[160%] text-white">
@@ -21,11 +22,11 @@ const FeatureItem = ({ text }: { text: string }) => (
 
 const ContactSection: React.FC = () => {
   const features = [
-    "Unified Multi-Network Analysis",
-    "Cross-Chain Network Support",
-    "Wallet Overview and Insights",
-    "Address Pathfinder Tool",
-    "Real-Time Wallet Monitoring"
+    'Unified Multi-Network Analysis',
+    'Cross-Chain Network Support',
+    'Wallet Overview and Insights',
+    'Address Pathfinder Tool',
+    'Real-Time Wallet Monitoring',
   ];
 
   return (
@@ -47,9 +48,10 @@ const ContactSection: React.FC = () => {
           <h1 className="text-left font-dm-sans font-bold text-4xl lg:text-[64px] leading-tight lg:leading-[83px] tracking-[0.05em] text-white w-full lg:w-[492px]">
             Ready to Action!
           </h1>
-          
+
           <p className="text-left font-dm-sans font-normal text-lg leading-[160%] text-white w-full lg:w-[492px]">
-            You can start your investigation with LegalBlock right away by requesting a demo.
+            You can start your investigation with LegalBlock right away by
+            requesting a demo.
           </p>
 
           {/* Feature List */}
@@ -69,4 +71,4 @@ const ContactSection: React.FC = () => {
   );
 };
 
-export default ContactSection; 
+export default ContactSection;

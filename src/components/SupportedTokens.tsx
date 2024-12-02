@@ -10,7 +10,8 @@ const tokens = [
 
 const SupportedTokens: React.FC = () => {
   return (
-    <section className="
+    <section
+      className="
       flex flex-col items-center
       px-4 sm:px-6 md:px-8 lg:px-12
       py-12 sm:py-16 md:py-16 lg:py-16
@@ -18,14 +19,18 @@ const SupportedTokens: React.FC = () => {
       w-full
       max-w-[1440px]
       mx-auto
-    ">
-      <div className="
+    "
+    >
+      <div
+        className="
         flex flex-col
         justify-center items-center
         py-2
         w-full
-      ">
-        <h2 className="
+      "
+      >
+        <h2
+          className="
           font-dm-sans font-light
           text-lg sm:text-xl md:text-2xl lg:text-[26px]
           leading-[41px]
@@ -33,12 +38,14 @@ const SupportedTokens: React.FC = () => {
           tracking-[0.12em]
           uppercase
           text-[#B783E4]
-        ">
+        "
+        >
           supported tokens and networks
         </h2>
       </div>
 
-      <div className="
+      <div
+        className="
         flex flex-row
         items-center
         justify-center
@@ -46,9 +53,10 @@ const SupportedTokens: React.FC = () => {
         gap-8 sm:gap-12 md:gap-16 lg:gap-32
         w-full
         max-w-[872px]
-      ">
+      "
+      >
         {tokens.map((token) => (
-          <div 
+          <div
             key={token.name}
             className="
               w-12 h-12
