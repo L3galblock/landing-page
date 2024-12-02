@@ -1,99 +1,249 @@
-import React, { Fragment } from 'react';
-
-import { Popover, Transition } from '@headlessui/react';
-import { XIcon } from '@heroicons/react/outline';
-
+import React, { useEffect, useState } from 'react';
+import Link from 'next/link';
+import Image from 'next/image';
+import { toast } from 'react-hot-toast';
 import config from '../config/index.json';
 
-const Menu = () => {
-  const { company } = config;
-  const { name: companyName, logo, companyNameLogo } = company;
+const Header: React.FC = () => {
+  const { header } = config;
+  const [scrolled, setScrolled] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  // Handle scroll event
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 0);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  // Scroll to section functions
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  };
+
+  const scrollToAbout = () => {
+    const teamSection = document.getElementById('team-section');
+    teamSection?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  const scrollToContact = () => {
+    const contactSection = document.getElementById('contact-section');
+    contactSection?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  const scrollToFeatures = () => {
+    const featuresSection = document.getElementById('features-section');
+    featuresSection?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  const handleLogin = () => {
+    toast.custom((t) => (
+      <div
+        className={`${
+          t.visible ? 'animate-enter' : 'animate-leave'
+        } max-w-md w-full bg-white shadow-lg rounded-lg pointer-events-auto flex ring-1 ring-black ring-opacity-5`}
+      >
+        <div className="flex-1 w-0 p-4 z-70">
+          <div className="flex items-start">
+            <div className="ml-3 flex-1">
+              <p className="text-sm font-medium text-gray-900">
+                Login is not ready while Beta registrations
+              </p>
+              <p className="mt-1 text-sm text-gray-500">
+                Please register and we will let you know when it is ready.
+              </p>
+            </div>
+          </div>
+        </div>
+        <div className="flex border-l border-gray-200">
+          <button
+            onClick={() => toast.dismiss(t.id)}
+            className="w-full border border-transparent rounded-none rounded-r-lg p-4 flex items-center justify-center text-sm font-medium text-green-600 hover:text-green-500 focus:outline-none"
+          >
+            Close
+          </button>
+        </div>
+      </div>
+    ), {
+      duration: 4000,
+      position: 'top-center',
+    });
+  };
 
   return (
     <>
-      <Popover>
-        <div className="relative pt-6 px-4 sm:px-6 lg:px-8">
-          <nav
-            className="relative flex flex-row justify-between sm:h-10 lg:justify-between"
-            aria-label="Global"
+      <header className={`
+        fixed top-0 left-0 right-0 
+        flex justify-between items-center 
+        py-2 xs:py-3 sm:py-4 lg:py-5 
+        px-3 xs:px-4 sm:px-8 lg:px-12 
+        z-50
+        transition-all duration-300
+        ${scrolled 
+          ? 'bg-white text-[#1B0F2E] shadow-lg' 
+          : 'bg-transparent text-basic-white'}
+      `}>
+        <div className="flex items-center">
+          <img 
+            src={scrolled ? "/assets/images/black-logo.svg" : header.logo}
+            alt="Legal Block" 
+            className="h-6 xs:h-7 sm:h-8" 
+            onClick={scrollToTop}
+          />
+        </div>
+
+        <button 
+          className="lg:hidden p-2"
+          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          aria-label="Toggle menu"
+        >
+          <svg 
+            className="w-6 h-6" 
+            fill="none" 
+            stroke="currentColor" 
+            viewBox="0 0 24 24"
           >
-            <div className="flex items-center flex-grow flex-shrink-0 lg:flex-grow-0">
-              <div className="flex flex-row items-center justify-between w-full md:w-auto">
-                <a href="#">
-                  <span className="sr-only">{companyName}</span>
-                  <img
-                    alt="legalblock"
-                    className="h-16 w-auto sm:h-16"
-                    src={logo}
-                  />
-                </a>
-                <a href="#">
-                  <img
-                    alt="Company Logo"
-                    className="h-10 w-auto sm:h-6 ml-4"
-                    src={companyNameLogo}
-                  />
-                </a>
-              </div>
+            <path 
+              strokeLinecap="round" 
+              strokeLinejoin="round" 
+              strokeWidth={2} 
+              d={isMobileMenuOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"} 
+            />
+          </svg>
+        </button>
+
+        <nav className="hidden lg:flex space-x-6 font-poppins">
+          <button 
+            onClick={scrollToAbout} 
+            className={`hover:text-green-500 transition-colors text-base
+              ${scrolled ? 'text-[#1B0F2E]' : 'text-basic-white'}`}
+          >
+            {header.about}
+          </button>
+          <button 
+            onClick={scrollToFeatures} 
+            className={`hover:text-green-500 transition-colors text-base
+              ${scrolled ? 'text-[#1B0F2E]' : 'text-basic-white'}`}
+          >
+            {header.solutions}
+          </button>
+          <button 
+            onClick={scrollToContact} 
+            className={`hover:text-green-500 transition-colors text-base
+              ${scrolled ? 'text-[#1B0F2E]' : 'text-basic-white'}`}
+          >
+            {header.contact}
+          </button>
+        </nav>
+
+        <div className="hidden lg:flex items-center space-x-4">
+           <button
+            onClick={handleLogin}
+            className={`
+            font-poppins 
+            text-base px-6 py-2 
+            rounded 
+            transition-colors
+            ${scrolled 
+              ? 'bg-[#1B0F2E] text-white hover:bg-[#2D1A47]' 
+              : 'bg-basic-white text-black hover:bg-gray-100'}
+          `}>
+            {header.login}
+          </button>
+          <button
+              onClick={() => {
+              scrollToAbout();
+            }}
+            className="
+              bg-green-500 text-basic-white font-poppins 
+            text-base px-6 py-2 
+            rounded 
+            hover:bg-green-700 transition-colors
+          ">
+            {header.demoButton}
+          </button>
+        </div>
+      </header>
+
+      {isMobileMenuOpen && (
+        <div className="
+          lg:hidden 
+          fixed top-[48px] xs:top-[52px] sm:top-[60px] 
+          left-0 right-0 
+          bg-white 
+          shadow-lg
+          py-4
+          z-40
+        ">
+          <nav className="flex flex-col px-4">
+            <div className="flex flex-col space-y-4 mb-4">
+              <button 
+                onClick={() => {
+                  scrollToTop();
+                  setIsMobileMenuOpen(false);
+                }}
+                className="text-left text-sm xs:text-base hover:text-green-500 text-[#1B0F2E] transition-colors"
+              >
+                {header.home}
+              </button>
+              <button 
+                onClick={() => {
+                  scrollToAbout();
+                  setIsMobileMenuOpen(false);
+                }}
+                className="text-left text-sm xs:text-base hover:text-green-500 text-[#1B0F2E] transition-colors"
+              >
+                {header.about}
+              </button>
+              <button 
+                onClick={() => {
+                  scrollToFeatures();
+                  setIsMobileMenuOpen(false);
+                }}
+                className="text-left text-sm xs:text-base hover:text-green-500 text-[#1B0F2E] transition-colors"
+              >
+                {header.solutions}
+              </button>
             </div>
-            <div className="hidden md:flex md:ml-10 md:pr-4 md:space-x-8 items-center relative">
-              <div className="trapezoid-background">
-                <img
-                  alt="Beta Icon"
-                  className="h-8 w-auto"
-                  src="/assets/images/beta.svg"
-                />
-                <span className="montserrat-18 ml-2">Will Be Out Soon!</span>
-              </div>
+
+            <div className="flex items-center space-x-2 pt-4 border-t border-gray-200">
+               <button
+                onClick={handleLogin}
+                className="
+                flex-1
+                bg-[#1B0F2E] text-white font-poppins 
+                text-sm xs:text-base
+                px-3 py-1.5 xs:px-4 xs:py-2
+                rounded 
+                hover:bg-[#2D1A47] transition-colors
+                text-center
+              ">
+                {header.login}
+              </button>
+              <button  
+               className="
+                flex-1
+                bg-green-500 text-basic-white font-poppins 
+                text-sm xs:text-base
+                px-3 py-1.5 xs:px-4 xs:py-2
+                rounded 
+                hover:bg-green-700 transition-colors
+                text-center
+              ">
+                {header.demoButton}
+              </button>
             </div>
           </nav>
         </div>
-
-        <Transition
-          as={Fragment}
-          enter="duration-150 ease-out"
-          enterFrom="opacity-0 scale-95"
-          enterTo="opacity-100 scale-100"
-          leave="duration-100 ease-in"
-          leaveFrom="opacity-100 scale-100"
-          leaveTo="opacity-0 scale-95"
-        >
-          <Popover.Panel
-            focus
-            className="absolute z-10 top-0 inset-x-0 p-2 transition transform origin-top-right md:hidden"
-          >
-            <div
-              className={`rounded-lg shadow-md bg-background ring-1 ring-black ring-opacity-5 overflow-hidden`}
-            >
-              <div className="px-5 pt-4 flex items-center justify-between">
-                <div>
-                  <img className="h-8 w-auto" src={logo} alt="" />
-                </div>
-                <div className="-mr-2">
-                  <Popover.Button
-                    className={`bg-background rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-secondary`}
-                  >
-                    <span className="sr-only">Close main menu</span>
-                    <XIcon className="h-6 w-6" aria-hidden="true" />
-                  </Popover.Button>
-                </div>
-              </div>
-              <div className="px-2 pt-2 pb-3 space-y-1">
-                <div className="flex items-center space-x-2">
-                  <img
-                    alt="Beta Icon"
-                    className="h-8 w-auto"
-                    src="/assets/images/beta.svg"
-                  />
-                  <span className="montserrat-18">Will Be Out Soon!</span>
-                </div>
-              </div>
-            </div>
-          </Popover.Panel>
-        </Transition>
-      </Popover>
+      )}
     </>
   );
 };
 
-export default Menu;
+export default Header;

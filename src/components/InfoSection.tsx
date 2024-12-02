@@ -1,49 +1,58 @@
 import React from 'react';
-
+import Image from 'next/image';
 import config from '../config/index.json';
 
-const InfoSection = () => {
+const InfoSection: React.FC = () => {
   const { infoSection } = config;
-  const { icon, title, subtitle, items, gradientStar, star } = infoSection;
 
   return (
-    <div className="relative flex justify-start items-center text-white py-16">
-      <div className="absolute inset-0 flex justify-start items-center">
-        <img
-          src={icon}
-          alt="Company Icon Background"
-          className="absolute opacity-10 w-5/6 h-5/6 scale-150 -left-40 -mt-8"
-        />
+    <section className="w-full px-3 xs:px-4 sm:px-6 py-4 xs:py-6 sm:py-8">
+      <div className="max-w-[1296px] mx-auto flex flex-col lg:flex-row items-center 
+        p-4 xs:p-6 sm:p-8 lg:p-[48px] gap-6 
+        bg-gradient-to-r from-[#6047F3] to-[#8D5AFA] rounded-xl">
+        
+        {/* Text Content */}
+        <div className="flex flex-col items-start gap-3 xs:gap-4 w-full lg:w-[60%]">
+          <h2 className="font-dm-sans font-extrabold 
+            text-xl xs:text-2xl sm:text-[26px] 
+            leading-[1.3] xs:leading-[1.4] sm:leading-[41px] 
+            tracking-[0.02em] text-white text-left w-full">
+            {infoSection.title}
+          </h2>
+          
+          <p className="font-dm-sans font-normal 
+            text-sm xs:text-base 
+            leading-[150%] text-white text-left w-full">
+            {infoSection.subtitle1}
+          </p>
+          
+          <p className="font-dm-sans font-normal 
+            text-sm xs:text-base 
+            leading-[150%] text-white text-left w-full">
+            {infoSection.subtitle2}
+          </p>
+        </div>
+
+        {/* Image Container */}
+        <div className="relative w-full lg:w-[40%] 
+          flex items-center justify-center">
+          <div className="relative w-full aspect-square max-w-[300px] xs:max-w-[350px] lg:max-w-[372px]">
+            <Image
+              src="/assets/images/sub-network.svg"
+              alt="Network Background"
+              width={372}
+              height={372}
+              className="object-contain transform rotate-30"
+              style={{
+                width: '100%',
+                height: 'auto'
+              }}
+            />
+          </div>
+        </div>
+
       </div>
-      <div className="relative z-10 text-left ml-10">
-        <img
-          src={icon}
-          alt="Company Icon"
-          className="mb-16 w-1/6 h-1/6 scale-150 ml-8"
-        />
-        <h2 className="sharp-grotesk-title mb-2 text-4xl lg:text-6xl">
-          {title}
-        </h2>
-        <h3 className="sharp-grotesk-title mb-8 text-2xl lg:text-4xl">
-          {subtitle}
-        </h3>
-        <ul className="list-none space-y-4">
-          {items.map((item, index) => (
-            <li
-              key={index}
-              className="montserrat-text flex items-start text-sm lg:text-lg"
-            >
-              <img
-                src={index % 2 === 0 ? gradientStar : star}
-                alt={index % 2 === 0 ? 'Star' : 'Gradient Star'}
-                className="mr-4 lg:mr-8 w-4 h-4 lg:w-6 lg:h-6"
-              />
-              {item}
-            </li>
-          ))}
-        </ul>
-      </div>
-    </div>
+    </section>
   );
 };
 

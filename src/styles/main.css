@@ -1,5 +1,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Sharp+Grotesk:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&display=swap');
+@font-face {
+  font-family: 'AG-Display';
+  src: url('/path-to-your-fonts/AGDisplay-Regular.woff2') format('woff2'),
+       url('/path-to-your-fonts/AGDisplay-Regular.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
 
 @tailwind base;
 @tailwind components;
@@ -10,6 +19,14 @@
   --color-primary: #0A1FD0;
   --color-secondary: #94A3DF;
   --color-tertiaty: #1C2534;
+  --color-primary-gradient: linear-gradient(0deg, rgba(0, 0, 0, 0.71), rgba(0, 0, 0, 0.71)), #533594;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  background-color: #1B0F2E;
 }
 
 a { 
@@ -116,4 +133,16 @@ a:hover {
 
 .text-left {
   text-align: left;
+}
+
+.font-poppins {
+  font-family: 'Poppins', sans-serif;
+}
+
+.font-ag-display {
+  font-family: 'AG-Display', sans-serif;
+}
+
+.font-dm-sans {
+  font-family: 'DM Sans', sans-serif;
 }

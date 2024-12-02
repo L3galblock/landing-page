@@ -1,29 +1,49 @@
-import React from 'react';
-
-import About from '../components/About';
-import Analytics from '../components/Analytics';
-import BlockSection from '../components/BlockSection';
-import GifComponent from '../components/GifComponent';
+import React, { Suspense, lazy } from 'react';
+import Footer from '../components/Footer';
 import Header from '../components/Header';
 import InfoSection from '../components/InfoSection';
+import TitleSection from '../components/TitleSection';
+import Features from '../components/Features';
+import ContactSection from '../components/ContactSection';
+import GradientRectangle from '../components/GradientRectangle';
+import SupportedTokens from '../components/SupportedTokens';
+import Team from '../components/Team';
+//import config from '../config/index.json';
 
-const App = () => {
+const DynamicBackground = lazy(() => import('../components/DynamicBackground'));
+
+const LandingPage: React.FC = () => {
+  //const { landingPage } = config;
+
   return (
-    <div className={`bg-background grid gap-y-16 overflow-hidden`}>
-      <div className={`relative bg-background`}>
-        <div className="w-full">
-          <div className={`relative z-10 bg-background  lg:w-full`}>
-            <Header />
-            <GifComponent />
-          </div>
-        </div>
-      </div>
-      <InfoSection />
-      <BlockSection />
-      <About />
-      <Analytics />
+    <div className="relative min-h-screen flex flex-col overflow-hidden">
+
+      <GradientRectangle />
+      <Suspense fallback={<div>Loading...</div>}>
+          <DynamicBackground />
+        </Suspense>
+      <div
+        className="absolute left-0 right-0 w-full -z-40"
+        style={{
+          height: '480px',
+          marginTop: '40vh', // This will push it below the viewport
+          background: 'linear-gradient(180deg, rgba(27, 15, 46, 0) 0%, #1B0F2E 50%)',
+        }}
+      ></div>
+
+      <Header />
+
+      <main className="relative flex flex-col text-center py-8 lg:px-12 sm:px-4 xs:px-1">
+        <TitleSection />
+        <SupportedTokens />
+        <Features />
+        <InfoSection />
+        <Team />
+        <ContactSection />
+      </main>
+      <Footer />
     </div>
   );
 };
 
-export default App;
+export default LandingPage;
